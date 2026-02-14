@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintain Users - SAP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E8E8E8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* SAP Title Bar */
+        .sap-title-bar {
+            background: linear-gradient(to bottom, #003D7A 0%, #002855 100%);
+            color: white;
+            padding: 4px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+        }
+
+        .title-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sap-icon {
+            font-weight: bold;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        .title-text {
+            font-size: 11px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 4px;
+        }
+
+        .window-btn {
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .window-btn:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* SAP Menu Bar */
+        .sap-menu-bar {
+            background-color: #F5F5F5;
+            border-bottom: 1px solid #CCCCCC;
+            display: flex;
+            padding: 0;
+        }
+
+        .menu-item {
+            padding: 4px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            border-right: 1px solid #E0E0E0;
+            background-color: #F5F5F5;
+        }
+
+        .menu-item:hover {
+            background-color: #E0E0E0;
+        }
+
+        /* SAP Toolbar */
+        .sap-toolbar {
+            background-color: #E8E8E8;
+            border-bottom: 1px solid #AAAAAA;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .toolbar-btn {
+            background-color: #E8E8E8;
+            border: 1px solid #AAAAAA;
+            padding: 3px 6px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .toolbar-btn:hover {
+            background-color: #D0D0D0;
+            border-color: #888888;
+        }
+
+        .toolbar-btn:active {
+            background-color: #C0C0C0;
+        }
+
+        .toolbar-separator {
+            width: 1px;
+            height: 20px;
+            background-color: #AAAAAA;
+            margin: 0 4px;
+        }
+
+        .toolbar-icon {
+            font-size: 14px;
+        }
+
+        /* Transaction Field */
+        .transaction-field-container {
+            background-color: #F5F5F5;
+            border-bottom: 1px solid #CCCCCC;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .transaction-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .transaction-input {
+            width: 120px;
+            padding: 2px 4px;
+            border: 1px solid #AAAAAA;
+            font-size: 11px;
+            font-family: 'Courier New', monospace;
+            background-color: white;
+        }
+
+        .transaction-input:focus {
+            outline: none;
+            border-color: #003366;
+            background-color: #FFFEF0;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 8px;
+            background-color: #E8E8E8;
+            overflow: auto;
+        }
+
+        .content-window {
+            background-color: white;
+            border: 1px solid #AAAAAA;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .window-title-bar {
+            background: linear-gradient(to bottom, #D0D0D0 0%, #B0B0B0 100%);
+            border-bottom: 1px solid #888888;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .window-content {
+            padding: 12px;
+        }
+
+        .search-section {
+            background-color: #F5F5F5;
+            border: 1px solid #CCCCCC;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 10px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #DDDDDD;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+            margin-bottom: 8px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-field label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .form-field input {
+            padding: 3px 6px;
+            border: 1px solid #AAAAAA;
+            font-size: 11px;
+            font-family: 'Courier New', monospace;
+            background-color: white;
+            width: 180px;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: #003366;
+            background-color: #FFFEF0;
+        }
+
+        .form-field input[readonly] {
+            background-color: #E8E8E8;
+            color: #666;
+        }
+
+        .sap-button {
+            background: linear-gradient(to bottom, #F5F5F5 0%, #E0E0E0 100%);
+            border: 1px solid #AAAAAA;
+            padding: 4px 16px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .sap-button:hover {
+            background: linear-gradient(to bottom, #E8E8E8 0%, #D0D0D0 100%);
+        }
+
+        .sap-button:active {
+            background: linear-gradient(to bottom, #D0D0D0 0%, #C0C0C0 100%);
+        }
+
+        .sap-button:disabled {
+            background: #E8E8E8;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .sap-button.primary {
+            background: linear-gradient(to bottom, #0070D2 0%, #005BBB 100%);
+            color: white;
+            border-color: #004999;
+        }
+
+        .sap-button.primary:hover:not(:disabled) {
+            background: linear-gradient(to bottom, #005BBB 0%, #004999 100%);
+        }
+
+        /* Tabs */
+        .tab-strip {
+            background-color: #E8E8E8;
+            border-bottom: 2px solid #003366;
+            display: flex;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        .tab {
+            padding: 6px 20px;
+            background: linear-gradient(to bottom, #E8E8E8 0%, #D0D0D0 100%);
+            border: 1px solid #AAAAAA;
+            border-bottom: none;
+            font-size: 11px;
+            cursor: pointer;
+            color: #333;
+            margin-right: 2px;
+        }
+
+        .tab.active {
+            background: white;
+            color: #000;
+            font-weight: bold;
+            border-bottom: 2px solid white;
+            margin-bottom: -2px;
+        }
+
+        .tab:hover:not(.active) {
+            background: linear-gradient(to bottom, #F0F0F0 0%, #D8D8D8 100%);
+        }
+
+        .tab-content {
+            background-color: white;
+            border: 1px solid #AAAAAA;
+            border-top: none;
+            padding: 12px;
+        }
+
+        /* Table Styling */
+        .sap-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .sap-table th {
+            background: linear-gradient(to bottom, #D0D0D0 0%, #B8B8B8 100%);
+            border: 1px solid #888888;
+            padding: 4px 8px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 11px;
+            color: #000;
+        }
+
+        .sap-table td {
+            border: 1px solid #CCCCCC;
+            padding: 4px 8px;
+            font-family: 'Courier New', monospace;
+            background-color: white;
+        }
+
+        .sap-table tr:hover td {
+            background-color: #E3F2FD;
+        }
+
+        .empty-row {
+            text-align: center;
+            font-style: italic;
+            color: #999;
+        }
+
+        /* Status Bar */
+        .sap-status-bar {
+            background-color: #E8E8E8;
+            border-top: 1px solid #AAAAAA;
+            padding: 4px 8px;
+            font-size: 10px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status-left {
+            font-family: 'Courier New', monospace;
+        }
+
+        .status-right {
+            color: #666;
+        }
+
+        .message-bar {
+            background-color: #D4EDDA;
+            border: 1px solid #C3E6CB;
+            color: #155724;
+            padding: 6px 10px;
+            margin-bottom: 10px;
+            font-size: 11px;
+            display: none;
+        }
+
+        .message-bar.info {
+            background-color: #D1ECF1;
+            border-color: #BEE5EB;
+            color: #0C5460;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .role-input-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .role-input {
+            flex: 1;
+            padding: 3px 6px;
+            border: 1px solid #AAAAAA;
+            font-size: 11px;
+            font-family: 'Courier New', monospace;
+            background-color: white;
+        }
+
+        .role-input:focus {
+            outline: none;
+            border-color: #003366;
+            background-color: #FFFEF0;
+        }
+
+        .f4-btn {
+            background: linear-gradient(to bottom, #F5F5F5 0%, #E0E0E0 100%);
+            border: 1px solid #AAAAAA;
+            padding: 3px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .f4-btn:hover {
+            background: linear-gradient(to bottom, #E8E8E8 0%, #D0D0D0 100%);
+        }
+
+        .delete-row-btn {
+            background: linear-gradient(to bottom, #F5F5F5 0%, #E0E0E0 100%);
+            border: 1px solid #AAAAAA;
+            padding: 3px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            color: #C00;
+        }
+
+        .delete-row-btn:hover {
+            background: linear-gradient(to bottom, #FFEBEE 0%, #FFCDD2 100%);
+        }
+
+        /* SAP Popup Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        .popup-dialog {
+            background-color: white;
+            border: 2px solid #003366;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            min-width: 400px;
+            max-width: 600px;
+        }
+
+        .popup-title-bar {
+            background: linear-gradient(to bottom, #003D7A 0%, #002855 100%);
+            color: white;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .popup-content {
+            padding: 20px;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .popup-icon {
+            font-size: 32px;
+            margin-right: 15px;
+            float: left;
+        }
+
+        .popup-icon.question {
+            color: #0070D2;
+        }
+
+        .popup-message {
+            margin-left: 50px;
+            line-height: 1.5;
+        }
+
+        .popup-buttons {
+            margin-top: 20px;
+            text-align: right;
+            clear: both;
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .popup-btn {
+            background: linear-gradient(to bottom, #F5F5F5 0%, #E0E0E0 100%);
+            border: 1px solid #AAAAAA;
+            padding: 6px 20px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #000;
+            min-width: 80px;
+        }
+
+        .popup-btn:hover {
+            background: linear-gradient(to bottom, #E8E8E8 0%, #D0D0D0 100%);
+        }
+
+        .popup-btn.primary {
+            background: linear-gradient(to bottom, #0070D2 0%, #005BBB 100%);
+            color: white;
+            border-color: #004999;
+        }
+
+        .popup-btn.primary:hover {
+            background: linear-gradient(to bottom, #005BBB 0%, #004999 100%);
+        }
+
+        /* F4 Search Help Modal */
+        .search-help-container {
+            padding: 15px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #AAAAAA;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #003366;
+            background-color: #FFFEF0;
+        }
+
+        .search-results {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #CCCCCC;
+        }
+
+        .search-result-item {
+            padding: 6px 10px;
+            border-bottom: 1px solid #E0E0E0;
+            cursor: pointer;
+            font-size: 11px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .search-result-item:hover {
+            background-color: #E3F2FD;
+        }
+
+        .search-result-item.selected {
+            background-color: #0070D2;
+            color: white;
+        }
+
+        /* SAP Message Bar */
+        .sap-message-bar {
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: bold;
+            display: none;
+            border-top: 1px solid;
+        }
+
+        .sap-message-bar.success {
+            background-color: #D4EDDA;
+            border-color: #28A745;
+            color: #155724;
+        }
+
+        .sap-message-bar.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- SAP Title Bar -->
+    <div class="sap-title-bar">
+        <div class="title-left">
+            <span class="sap-icon">SAP</span>
+            <span class="title-text">Maintain Users - Change (SU01)</span>
+        </div>
+        <div class="window-controls">
+            <button class="window-btn" title="Minimize">_</button>
+            <button class="window-btn" title="Maximize">□</button>
+            <button class="window-btn" onclick="logout()" title="Close">✕</button>
+        </div>
+    </div>
+
+    <!-- SAP Menu Bar -->
+    <div class="sap-menu-bar">
+        <div class="menu-item">System</div>
+        <div class="menu-item">Edit</div>
+        <div class="menu-item">Goto</div>
+        <div class="menu-item">Favorites</div>
+        <div class="menu-item">Extras</div>
+        <div class="menu-item">Environment</div>
+        <div class="menu-item">Help</div>
+    </div>
+
+    <!-- SAP Toolbar -->
+    <div class="sap-toolbar">
+        <button class="toolbar-btn" onclick="saveRoles()" title="Save"><span class="toolbar-icon">💾</span></button>
+        <button class="toolbar-btn" title="Back"><span class="toolbar-icon">◀</span></button>
+        <button class="toolbar-btn" title="Exit"><span class="toolbar-icon">✕</span></button>
+        <button class="toolbar-btn" title="Cancel"><span class="toolbar-icon">⊗</span></button>
+        <div class="toolbar-separator"></div>
+        <button class="toolbar-btn" title="Print"><span class="toolbar-icon">🖨</span></button>
+        <button class="toolbar-btn" title="Find"><span class="toolbar-icon">🔍</span></button>
+        <div class="toolbar-separator"></div>
+        <button class="toolbar-btn" title="First Page"><span class="toolbar-icon">⏮</span></button>
+        <button class="toolbar-btn" title="Previous Page"><span class="toolbar-icon">◀</span></button>
+        <button class="toolbar-btn" title="Next Page"><span class="toolbar-icon">▶</span></button>
+        <button class="toolbar-btn" title="Last Page"><span class="toolbar-icon">⏭</span></button>
+        <div class="toolbar-separator"></div>
+        <button class="toolbar-btn" title="Help"><span class="toolbar-icon">?</span></button>
+    </div>
+
+    <!-- Transaction Field -->
+    <div class="transaction-field-container">
+        <span class="transaction-label">Transaction:</span>
+        <input type="text" class="transaction-input" value="SU01" readonly>
+    </div>
+
+    <!-- Command Field -->
+    <div class="command-field-container">
+        <input type="text" id="commandField" class="command-field" placeholder="Enter transaction code (e.g., /nZV_T16FW)" autocomplete="off">
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-window">
+            <div class="window-title-bar">User Maintenance: Change</div>
+            
+            <div class="window-content">
+                <!-- Search Section -->
+                <div class="search-section">
+                    <div class="section-title">User Selection</div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="userId">User</label>
+                            <input type="text" id="userId" value="MJONES" readonly>
+                        </div>
+                        <button class="sap-button" onclick="changeUser()">Change</button>
+                    </div>
+                </div>
+
+                <!-- User Details with Tabs -->
+                <div class="tab-strip">
+                    <div class="tab">Address</div>
+                    <div class="tab">Logon Data</div>
+                    <div class="tab active">Roles</div>
+                    <div class="tab">Profiles</div>
+                    <div class="tab">Groups</div>
+                </div>
+
+                <div class="tab-content">
+                    <h3 style="font-size: 12px; color: #003366; margin-bottom: 10px;">Assigned Roles</h3>
+
+                    <div id="roleInputContainer">
+                        <!-- Role input rows will be added here dynamically -->
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="sap-button" onclick="addRoleRow()">+ Add Role</button>
+                        <button class="sap-button primary" onclick="showSaveConfirmation()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAP Message Bar -->
+    <div id="sapMessageBar" class="sap-message-bar"></div>
+
+    <!-- Status Bar -->
+    <div class="sap-status-bar">
+        <div class="status-left">
+            System: ECC | User: <span id="currentUser">SAPBOT</span> | Mode: Change | Client: 100
+        </div>
+        <div class="status-right">SU01 - Maintain Users</div>
+    </div>
+
+    <!-- Save Confirmation Popup -->
+    <div id="savePopup" class="popup-overlay">
+        <div class="popup-dialog">
+            <div class="popup-title-bar">
+                <span>SAP - Save Confirmation</span>
+            </div>
+            <div class="popup-content">
+                <div class="popup-icon question">?</div>
+                <div class="popup-message">
+                    Save user MJONES with assigned roles?
+                </div>
+                <div class="popup-buttons">
+                    <button class="popup-btn primary" onclick="confirmSave()">Yes</button>
+                    <button class="popup-btn" onclick="closeSavePopup()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- F4 Search Help Popup -->
+    <div id="searchHelpPopup" class="popup-overlay">
+        <div class="popup-dialog">
+            <div class="popup-title-bar">
+                <span>Search Help - Roles</span>
+            </div>
+            <div class="search-help-container">
+                <input type="text" id="searchBox" class="search-box" placeholder="Search for roles..." autocomplete="off">
+                <div class="search-results" id="searchResults"></div>
+                <div class="popup-buttons">
+                    <button class="popup-btn primary" onclick="selectRole()">Select</button>
+                    <button class="popup-btn" onclick="closeSearchHelp()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let roleRowCounter = 0;
+        let currentSearchInputId = null;
+        let selectedSearchRole = null;
+        let allRoles = [];
+
+        // Load current user and initialize
+        window.addEventListener('load', function() {
+            const currentUser = sessionStorage.getItem('currentUser') || 'SAPBOT';
+            document.getElementById('currentUser').textContent = currentUser;
+
+            // Load all available roles from mock data
+            loadAvailableRoles();
+
+            // Add first empty role row
+            addRoleRow();
+
+            // Setup command field
+            document.getElementById('commandField').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const command = this.value.trim().toUpperCase();
+                    handleCommand(command);
+                }
+            });
+
+            // Setup search box
+            document.getElementById('searchBox').addEventListener('input', filterRoles);
+        });
+
+        function loadAvailableRoles() {
+            // Get all unique roles from the viewed user (JSMITH) and other users
+            // In a real app, this would fetch from sap-mock-data.json
+            allRoles = [
+                'YOTH_PROC_APPROVE_PO_11',
+                'YOTH_PROC_APPROVE_PO_22',
+                'YOTH_PROC_APPROVE_PO_33',
+                'YOTH_PROC_APPROVE_PO_45',
+                'YOTH_PROC_APPROVE_PO_78',
+                'YOTH_FIN_APPROVE_INV_12',
+                'YOTH_FIN_APPROVE_INV_34',
+                'YOTH_HR_MANAGER',
+                'YOTH_IT_ADMIN',
+                'YOTH_SALES_REP',
+                'Z_PROCUREMENT_APPROVER',
+                'Z_FINANCE_CONTROLLER',
+                'Z_HR_SPECIALIST'
+            ];
+        }
+
+        function addRoleRow() {
+            roleRowCounter++;
+            const container = document.getElementById('roleInputContainer');
+            
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'role-input-row';
+            rowDiv.id = `roleRow${roleRowCounter}`;
+            
+            rowDiv.innerHTML = `
+                <input type="text" 
+                       id="roleInput${roleRowCounter}" 
+                       class="role-input" 
+                       placeholder="Enter role name or use F4 search"
+                       autocomplete="off">
+                <button class="f4-btn" onclick="openSearchHelp(${roleRowCounter})" title="Search Help (F4)">F4</button>
+                <button class="delete-row-btn" onclick="deleteRoleRow(${roleRowCounter})" title="Delete">✕</button>
+            `;
+            
+            container.appendChild(rowDiv);
+        }
+
+        function deleteRoleRow(rowId) {
+            const row = document.getElementById(`roleRow${rowId}`);
+            if (row) {
+                row.remove();
+            }
+        }
+
+        function openSearchHelp(rowId) {
+            currentSearchInputId = `roleInput${rowId}`;
+            selectedSearchRole = null;
+            
+            // Populate search results
+            displaySearchResults(allRoles);
+            
+            // Show popup
+            document.getElementById('searchHelpPopup').classList.add('active');
+            document.getElementById('searchBox').value = '';
+            document.getElementById('searchBox').focus();
+        }
+
+        function displaySearchResults(roles) {
+            const resultsDiv = document.getElementById('searchResults');
+            resultsDiv.innerHTML = '';
+            
+            roles.forEach(role => {
+                const item = document.createElement('div');
+                item.className = 'search-result-item';
+                item.textContent = role;
+                item.onclick = function() {
+                    // Deselect all
+                    document.querySelectorAll('.search-result-item').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    // Select this one
+                    this.classList.add('selected');
+                    selectedSearchRole = role;
+                };
+                item.ondblclick = function() {
+                    selectedSearchRole = role;
+                    selectRole();
+                };
+                resultsDiv.appendChild(item);
+            });
+        }
+
+        function filterRoles() {
+            const searchText = document.getElementById('searchBox').value.toUpperCase();
+            const filteredRoles = allRoles.filter(role => role.toUpperCase().includes(searchText));
+            displaySearchResults(filteredRoles);
+        }
+
+        function selectRole() {
+            if (selectedSearchRole && currentSearchInputId) {
+                document.getElementById(currentSearchInputId).value = selectedSearchRole;
+                closeSearchHelp();
+            }
+        }
+
+        function closeSearchHelp() {
+            document.getElementById('searchHelpPopup').classList.remove('active');
+            currentSearchInputId = null;
+            selectedSearchRole = null;
+        }
+
+        function handleCommand(command) {
+            if (command === '/NZV_T16FW' || command === 'ZV_T16FW') {
+                window.location.href = 'zv-t16fw-table.html';
+            } else if (command === '/NEX' || command === '/N') {
+                logout();
+            } else {
+                alert('Unknown transaction code: ' + command);
+                document.getElementById('commandField').value = '';
+            }
+        }
+
+        function showSaveConfirmation() {
+            // Validate that at least one role is entered
+            const inputs = document.querySelectorAll('.role-input');
+            let hasRoles = false;
+            
+            inputs.forEach(input => {
+                if (input.value.trim()) {
+                    hasRoles = true;
+                }
+            });
+
+            if (!hasRoles) {
+                showMessage('Please enter at least one role before saving', 'error');
+                return;
+            }
+
+            document.getElementById('savePopup').classList.add('active');
+        }
+
+        function closeSavePopup() {
+            document.getElementById('savePopup').classList.remove('active');
+        }
+
+        function confirmSave() {
+            // Collect all entered roles
+            const inputs = document.querySelectorAll('.role-input');
+            const assignedRoles = [];
+            
+            inputs.forEach(input => {
+                if (input.value.trim()) {
+                    assignedRoles.push(input.value.trim());
+                }
+            });
+
+            // Store in sessionStorage
+            sessionStorage.setItem('assignedRoles', JSON.stringify(assignedRoles));
+            sessionStorage.setItem('targetUser', 'MJONES');
+
+            // Close popup
+            closeSavePopup();
+
+            // Show success message
+            showMessage(`User MJONES saved with ${assignedRoles.length} role(s)`, 'success');
+
+            // Navigate to ZV_T16FW after brief delay
+            setTimeout(() => {
+                window.location.href = 'zv-t16fw-table.html';
+            }, 2000);
+        }
+
+        function showMessage(text, type) {
+            const messageBar = document.getElementById('sapMessageBar');
+            messageBar.textContent = text;
+            messageBar.className = 'sap-message-bar ' + type + ' active';
+
+            setTimeout(() => {
+                messageBar.classList.remove('active');
+            }, 3000);
+        }
+
+        function changeUser() {
+            showMessage('User MJONES opened in change mode', 'info');
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'sap-login.html';
+        }
+    </script>
+</body>
+</html>

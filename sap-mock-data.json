@@ -1,0 +1,694 @@
+{
+  "users": [
+    {
+      "userId": "SAPBOT",
+      "fullName": "SAP Bot Admin",
+      "email": "sapbot@company.com",
+      "department": "IT Administration",
+      "roles": [
+        {
+          "roleName": "SAP_ALL",
+          "validFrom": "01.01.2020",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "JSMITH",
+      "fullName": "John Smith",
+      "email": "john.smith@company.com",
+      "department": "Procurement",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_33",
+          "validFrom": "01.01.2026",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_45",
+          "validFrom": "01.01.2026",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_78",
+          "validFrom": "01.01.2026",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "MJONES",
+      "fullName": "Mary Jones",
+      "email": "mary.jones@company.com",
+      "department": "Procurement",
+      "roles": []
+    },
+    {
+      "userId": "ASMITH",
+      "fullName": "Alice Smith",
+      "email": "alice.smith@company.com",
+      "department": "Finance",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_92",
+          "validFrom": "15.01.2026",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "BWILSON",
+      "fullName": "Brian Wilson",
+      "email": "brian.wilson@company.com",
+      "department": "Procurement",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_21",
+          "validFrom": "01.06.2025",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_22",
+          "validFrom": "01.06.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "TJOHNSON",
+      "fullName": "Thomas Johnson",
+      "email": "thomas.johnson@company.com",
+      "department": "Procurement",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_56",
+          "validFrom": "01.03.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "RGARCIA",
+      "fullName": "Robert Garcia",
+      "email": "robert.garcia@company.com",
+      "department": "Finance",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_11",
+          "validFrom": "01.01.2025",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_12",
+          "validFrom": "01.01.2025",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_13",
+          "validFrom": "01.01.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "LMARTINEZ",
+      "fullName": "Linda Martinez",
+      "email": "linda.martinez@company.com",
+      "department": "Finance",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_14",
+          "validFrom": "15.02.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "KANDERSON",
+      "fullName": "Karen Anderson",
+      "email": "karen.anderson@company.com",
+      "department": "Finance",
+      "roles": []
+    },
+    {
+      "userId": "DTHOMAS",
+      "fullName": "David Thomas",
+      "email": "david.thomas@company.com",
+      "department": "Operations",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_67",
+          "validFrom": "01.04.2025",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_68",
+          "validFrom": "01.04.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "MWHITE",
+      "fullName": "Michael White",
+      "email": "michael.white@company.com",
+      "department": "Operations",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_89",
+          "validFrom": "01.07.2025",
+          "validTo": "30.06.2026"
+        }
+      ]
+    },
+    {
+      "userId": "JHARRIS",
+      "fullName": "Jennifer Harris",
+      "email": "jennifer.harris@company.com",
+      "department": "Operations",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_90",
+          "validFrom": "01.01.2026",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "CCLARK",
+      "fullName": "Christopher Clark",
+      "email": "christopher.clark@company.com",
+      "department": "Sales",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_34",
+          "validFrom": "01.05.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "PLEWIS",
+      "fullName": "Patricia Lewis",
+      "email": "patricia.lewis@company.com",
+      "department": "Sales",
+      "roles": []
+    },
+    {
+      "userId": "SROBINSON",
+      "fullName": "Steven Robinson",
+      "email": "steven.robinson@company.com",
+      "department": "Sales",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_35",
+          "validFrom": "15.03.2025",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_36",
+          "validFrom": "15.03.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "NWALKER",
+      "fullName": "Nancy Walker",
+      "email": "nancy.walker@company.com",
+      "department": "HR",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_41",
+          "validFrom": "01.01.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "JHALL",
+      "fullName": "James Hall",
+      "email": "james.hall@company.com",
+      "department": "HR",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_42",
+          "validFrom": "01.08.2025",
+          "validTo": "31.07.2026"
+        }
+      ]
+    },
+    {
+      "userId": "BALLEN",
+      "fullName": "Barbara Allen",
+      "email": "barbara.allen@company.com",
+      "department": "HR",
+      "roles": []
+    },
+    {
+      "userId": "KYOUNG",
+      "fullName": "Kevin Young",
+      "email": "kevin.young@company.com",
+      "department": "IT",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_51",
+          "validFrom": "01.09.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "EKING",
+      "fullName": "Elizabeth King",
+      "email": "elizabeth.king@company.com",
+      "department": "IT",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_52",
+          "validFrom": "01.10.2025",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_53",
+          "validFrom": "01.10.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "RWRIGHT",
+      "fullName": "Richard Wright",
+      "email": "richard.wright@company.com",
+      "department": "IT",
+      "roles": []
+    },
+    {
+      "userId": "SLOPEZ",
+      "fullName": "Sarah Lopez",
+      "email": "sarah.lopez@company.com",
+      "department": "Procurement",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_23",
+          "validFrom": "01.11.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "THILL",
+      "fullName": "Timothy Hill",
+      "email": "timothy.hill@company.com",
+      "department": "Finance",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_15",
+          "validFrom": "01.12.2025",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_16",
+          "validFrom": "01.12.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "DSCOTT",
+      "fullName": "Deborah Scott",
+      "email": "deborah.scott@company.com",
+      "department": "Operations",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_69",
+          "validFrom": "15.01.2026",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "MGREEN",
+      "fullName": "Mark Green",
+      "email": "mark.green@company.com",
+      "department": "Sales",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_37",
+          "validFrom": "01.02.2026",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "LADAMS",
+      "fullName": "Lisa Adams",
+      "email": "lisa.adams@company.com",
+      "department": "Finance",
+      "roles": []
+    },
+    {
+      "userId": "PBAKER",
+      "fullName": "Paul Baker",
+      "email": "paul.baker@company.com",
+      "department": "Procurement",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_24",
+          "validFrom": "10.01.2026",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_25",
+          "validFrom": "10.01.2026",
+          "validTo": "31.12.2099"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_26",
+          "validFrom": "10.01.2026",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "RNELSON",
+      "fullName": "Rebecca Nelson",
+      "email": "rebecca.nelson@company.com",
+      "department": "HR",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_43",
+          "validFrom": "05.01.2026",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "GCARTER",
+      "fullName": "George Carter",
+      "email": "george.carter@company.com",
+      "department": "Operations",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_70",
+          "validFrom": "20.12.2025",
+          "validTo": "31.12.2099"
+        }
+      ]
+    },
+    {
+      "userId": "HMITCHELL",
+      "fullName": "Helen Mitchell",
+      "email": "helen.mitchell@company.com",
+      "department": "IT",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_54",
+          "validFrom": "01.01.2026",
+          "validTo": "31.12.2099"
+        }
+      ]
+    }
+  ],
+  "delegations": [
+    {
+      "releaseCode": "33",
+      "userId": "JSMITH",
+      "costCenter": "1000",
+      "validFrom": "01.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Materials"
+    },
+    {
+      "releaseCode": "45",
+      "userId": "JSMITH",
+      "costCenter": "1200",
+      "validFrom": "01.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Services"
+    },
+    {
+      "releaseCode": "78",
+      "userId": "JSMITH",
+      "costCenter": "1500",
+      "validFrom": "01.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Capital"
+    },
+    {
+      "releaseCode": "92",
+      "userId": "ASMITH",
+      "costCenter": "2000",
+      "validFrom": "15.01.2026",
+      "validTo": "15.03.2026",
+      "description": "Purchase Order Approval - Special Projects"
+    },
+    {
+      "releaseCode": "21",
+      "userId": "BWILSON",
+      "costCenter": "1100",
+      "validFrom": "01.06.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Raw Materials"
+    },
+    {
+      "releaseCode": "22",
+      "userId": "BWILSON",
+      "costCenter": "1100",
+      "validFrom": "01.06.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Components"
+    },
+    {
+      "releaseCode": "56",
+      "userId": "TJOHNSON",
+      "costCenter": "1300",
+      "validFrom": "01.03.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Contract Services"
+    },
+    {
+      "releaseCode": "11",
+      "userId": "RGARCIA",
+      "costCenter": "2100",
+      "validFrom": "01.01.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Financial Services"
+    },
+    {
+      "releaseCode": "12",
+      "userId": "RGARCIA",
+      "costCenter": "2100",
+      "validFrom": "01.01.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Consulting"
+    },
+    {
+      "releaseCode": "13",
+      "userId": "RGARCIA",
+      "costCenter": "2200",
+      "validFrom": "01.01.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Audit Services"
+    },
+    {
+      "releaseCode": "14",
+      "userId": "LMARTINEZ",
+      "costCenter": "2300",
+      "validFrom": "15.02.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Tax Services"
+    },
+    {
+      "releaseCode": "67",
+      "userId": "DTHOMAS",
+      "costCenter": "3000",
+      "validFrom": "01.04.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Logistics"
+    },
+    {
+      "releaseCode": "68",
+      "userId": "DTHOMAS",
+      "costCenter": "3100",
+      "validFrom": "01.04.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Warehousing"
+    },
+    {
+      "releaseCode": "89",
+      "userId": "MWHITE",
+      "costCenter": "3200",
+      "validFrom": "01.07.2025",
+      "validTo": "30.06.2026",
+      "description": "Purchase Order Approval - Transportation"
+    },
+    {
+      "releaseCode": "90",
+      "userId": "JHARRIS",
+      "costCenter": "3300",
+      "validFrom": "01.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Maintenance"
+    },
+    {
+      "releaseCode": "34",
+      "userId": "CCLARK",
+      "costCenter": "4000",
+      "validFrom": "01.05.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Marketing Materials"
+    },
+    {
+      "releaseCode": "35",
+      "userId": "SROBINSON",
+      "costCenter": "4100",
+      "validFrom": "15.03.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Sales Promotions"
+    },
+    {
+      "releaseCode": "36",
+      "userId": "SROBINSON",
+      "costCenter": "4200",
+      "validFrom": "15.03.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Events"
+    },
+    {
+      "releaseCode": "41",
+      "userId": "NWALKER",
+      "costCenter": "5000",
+      "validFrom": "01.01.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Recruitment Services"
+    },
+    {
+      "releaseCode": "42",
+      "userId": "JHALL",
+      "costCenter": "5100",
+      "validFrom": "01.08.2025",
+      "validTo": "31.07.2026",
+      "description": "Purchase Order Approval - Training"
+    },
+    {
+      "releaseCode": "51",
+      "userId": "KYOUNG",
+      "costCenter": "6000",
+      "validFrom": "01.09.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Software Licenses"
+    },
+    {
+      "releaseCode": "52",
+      "userId": "EKING",
+      "costCenter": "6100",
+      "validFrom": "01.10.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Hardware"
+    },
+    {
+      "releaseCode": "53",
+      "userId": "EKING",
+      "costCenter": "6200",
+      "validFrom": "01.10.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Cloud Services"
+    },
+    {
+      "releaseCode": "23",
+      "userId": "SLOPEZ",
+      "costCenter": "1400",
+      "validFrom": "01.11.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Office Supplies"
+    },
+    {
+      "releaseCode": "15",
+      "userId": "THILL",
+      "costCenter": "2400",
+      "validFrom": "01.12.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Insurance"
+    },
+    {
+      "releaseCode": "16",
+      "userId": "THILL",
+      "costCenter": "2500",
+      "validFrom": "01.12.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Legal Services"
+    },
+    {
+      "releaseCode": "69",
+      "userId": "DSCOTT",
+      "costCenter": "3400",
+      "validFrom": "15.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Facility Management"
+    },
+    {
+      "releaseCode": "37",
+      "userId": "MGREEN",
+      "costCenter": "4300",
+      "validFrom": "01.02.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Customer Gifts"
+    },
+    {
+      "releaseCode": "24",
+      "userId": "PBAKER",
+      "costCenter": "1600",
+      "validFrom": "10.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Packaging Materials"
+    },
+    {
+      "releaseCode": "25",
+      "userId": "PBAKER",
+      "costCenter": "1700",
+      "validFrom": "10.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Safety Equipment"
+    },
+    {
+      "releaseCode": "26",
+      "userId": "PBAKER",
+      "costCenter": "1800",
+      "validFrom": "10.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Tools"
+    },
+    {
+      "releaseCode": "43",
+      "userId": "RNELSON",
+      "costCenter": "5200",
+      "validFrom": "05.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Employee Benefits"
+    },
+    {
+      "releaseCode": "70",
+      "userId": "GCARTER",
+      "costCenter": "3500",
+      "validFrom": "20.12.2025",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Equipment Rental"
+    },
+    {
+      "releaseCode": "54",
+      "userId": "HMITCHELL",
+      "costCenter": "6300",
+      "validFrom": "01.01.2026",
+      "validTo": "31.12.2099",
+      "description": "Purchase Order Approval - Telecom Services"
+    }
+  ],
+  "systemInfo": {
+    "client": "100",
+    "system": "ECC",
+    "instance": "PRD",
+    "version": "SAP ECC 6.0",
+    "environment": "Demo System"
+  }
+}
