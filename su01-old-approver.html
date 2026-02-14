@@ -740,7 +740,12 @@
 
                 // Display user details and roles
                 function displayUser() {
-                    const userId = document.getElementById('userId').value.trim();
+                    let userId = document.getElementById('userId').value.trim();
+                    // Try to get targetUser from sessionStorage if userId is not set
+                    if (!userId) {
+                        userId = sessionStorage.getItem('targetUser') || 'JSMITH';
+                        document.getElementById('userId').value = userId;
+                    }
                     const user = sapUsersById[userId];
                     if (!user) {
                         showMessageBar('User not found: ' + userId);
@@ -782,11 +787,10 @@
             // Standardize and handle SAP t-codes
             const tcode = command.replace(/^\/N/i, '').replace(/^\//, '').toUpperCase();
             if (tcode === 'SU01') {
-                pendingNavigation = 'su01-new-approver.html';
-                showNavigationPopup();
+                // Route to initial screen (blank entry screen)
+                window.location.href = 'su01-initial.html';
             } else if (tcode === 'ZV_T16FW') {
-                pendingNavigation = 'zv-t16fw-table.html';
-                showNavigationPopup();
+                window.location.href = 'zv-t16fw-table.html';
             } else if (tcode === 'NEX' || tcode === 'N') {
                 logout();
             } else {
@@ -817,26 +821,26 @@
 
         function confirmNavigation() {
             if (pendingNavigation) {
-                // Store that we viewed JSMITH's roles
-                sessionStorage.setItem('viewedUser', 'JSMITH');
-                sessionStorage.setItem('viewedRoles', JSON.stringify([
-                    'YOTH_PROC_APPROVE_PO_33',
-                    'YOTH_PROC_APPROVE_PO_45',
-                    'YOTH_PROC_APPROVE_PO_78'
-                ]));
+                const userId = document.getElementById('userId').value.trim() || 'JSMITH';
+                // Store that we viewed this user's roles
+                sessionStorage.setItem('viewedUser', userId);
+                const roles = (sapUsersById[userId] && sapUsersById[userId].roles) || [];
+                sessionStorage.setItem('viewedRoles', JSON.stringify(roles.map(r => r.roleName)));
                 
                 window.location.href = pendingNavigation;
             }
         }
 
-        function displayUser() {
-            const messageBar = document.getElementById('messageBar');
-            messageBar.textContent = 'User JSMITH displayed';
-            messageBar.style.display = 'block';
-            
+        function showMessageBar(message) {
+            const bar = document.getElementById('messageBar');
+            if (!bar) return;
+            bar.textContent = message;
+            if (!bar.classList) bar.className = 'message-bar show';
+            else bar.classList.add('show');
             setTimeout(() => {
-                messageBar.style.display = 'none';
-            }, 3000);
+                if (bar.classList) bar.classList.remove('show');
+                else bar.style.display = 'none';
+            }, 3500);
         }
 
         function logout() {

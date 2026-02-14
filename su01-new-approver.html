@@ -792,6 +792,10 @@
             const currentUser = sessionStorage.getItem('currentUser') || 'SAPBOT';
             document.getElementById('currentUser').textContent = currentUser;
 
+            // Set userId from sessionStorage if available
+            const targetUser = sessionStorage.getItem('targetUser') || 'JSMITH';
+            document.getElementById('userId').value = targetUser;
+
             // Load all available roles from mock data
             await loadAvailableRoles();
 
@@ -938,7 +942,10 @@
         function handleCommand(command) {
             // Standardize t-code format
             const tcode = command.replace(/^\/(N)?/i, '').toUpperCase();
-            if (tcode === 'ZV_T16FW') {
+            if (tcode === 'SU01') {
+                // Route to initial screen (blank entry screen)
+                window.location.href = 'su01-initial.html';
+            } else if (tcode === 'ZV_T16FW') {
                 window.location.href = 'zv-t16fw-table.html';
             } else if (tcode === 'NEX' || tcode === 'N') {
                 logout();
@@ -982,15 +989,18 @@
                 }
             });
 
+            // Get targetUser from sessionStorage or use default
+            const targetUser = sessionStorage.getItem('targetUser') || 'JSMITH';
+
             // Store in sessionStorage
             sessionStorage.setItem('assignedRoles', JSON.stringify(assignedRoles));
-            sessionStorage.setItem('targetUser', 'MJONES');
+            sessionStorage.setItem('lastModifiedUser', targetUser);
 
             // Close popup
             closeSavePopup();
 
             // Show success message
-            showMessage(`User MJONES saved with ${assignedRoles.length} role(s)`, 'success');
+            showMessage(`User ${targetUser} saved with ${assignedRoles.length} role(s)`, 'success');
 
             // Navigate to ZV_T16FW after brief delay
             setTimeout(() => {

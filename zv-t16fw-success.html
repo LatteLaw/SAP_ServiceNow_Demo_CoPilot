@@ -557,7 +557,10 @@
 
         function handleCommand(command) {
             const tcode = command.replace(/^\/(N)?/i, '').toUpperCase();
-            if (tcode === 'NEX' || tcode === 'N') {
+            if (tcode === 'SU01') {
+                // Route to initial screen (blank entry screen)
+                window.location.href = 'su01-initial.html';
+            } else if (tcode === 'NEX' || tcode === 'N') {
                 logout();
             } else {
                 showMessage('Unknown transaction code: ' + command);

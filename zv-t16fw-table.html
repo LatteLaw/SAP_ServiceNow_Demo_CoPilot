@@ -765,7 +765,12 @@
         });
 
         function handleCommand(command) {
-            if (command === '/NEX' || command === '/N') {
+            // Standardize t-code format
+            const tcode = command.replace(/^\/(N)?/i, '').toUpperCase();
+            if (tcode === 'SU01') {
+                // Route to initial screen (blank entry screen)
+                window.location.href = 'su01-initial.html';
+            } else if (tcode === 'NEX' || tcode === 'N') {
                 logout();
             } else {
                 showMessage('Unknown transaction code: ' + command);
