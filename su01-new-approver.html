@@ -657,9 +657,10 @@
                 <div class="search-section">
                     <div class="section-title">User Selection</div>
                     <div class="form-row">
-                        <div class="form-field">
+                        <div class="form-field" style="display: flex; align-items: center; gap: 8px;">
                             <label for="userId">User</label>
-                            <input type="text" id="userId" value="MJONES" readonly>
+                            <input type="text" id="userId" value="MJONES" autocomplete="off" onkeydown="if(event.key==='F4'){event.preventDefault();openUserSearchModal();}">
+                            <button class="sap-button" type="button" onclick="openUserSearchModal()" title="F4 Search">F4</button>
                         </div>
                         <button class="sap-button" onclick="changeUser()">Change</button>
                     </div>
@@ -686,6 +687,38 @@
                         <button class="sap-button primary" onclick="showSaveConfirmation()">Save</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Search Help Modal -->
+    <div id="userSearchModal" class="modal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.2);align-items:center;justify-content:center;">
+        <div class="modal-content" style="background:#fff;padding:20px;border-radius:6px;min-width:350px;max-width:90vw;box-shadow:0 2px 12px #0002;">
+            <div class="modal-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span class="modal-title">Search Help: Users</span>
+                <span class="close-modal" style="cursor:pointer;font-size:18px;" onclick="closeUserSearchModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="search-input-group" style="margin-bottom:10px;">
+                    <label for="userSearchInput">User ID:</label>
+                    <input type="text" id="userSearchInput" placeholder="Enter search term..." oninput="filterUserResults()" style="margin-left:8px;">
+                </div>
+                <div class="search-results">
+                    <table id="userSearchTable" style="width:100%;border-collapse:collapse;">
+                        <thead>
+                            <tr style="background:#f5f5f5;">
+                                <th>User ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userSearchResults"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top:10px;text-align:right;">
+                <button class="modal-button" onclick="closeUserSearchModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -744,12 +777,23 @@
         let allRoles = [];
 
         // Load current user and initialize
-        window.addEventListener('load', function() {
+        window.addEventListener('load', async function() {
+            // Check for scenario parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const scenario = urlParams.get('scenario');
+            if (scenario && scenario.toUpperCase() === 'NO_AUTH') {
+                showMessage('Authorization failure: You are not authorized to change this user.', 'error');
+                document.getElementById('userId').disabled = true;
+                document.getElementById('commandField').disabled = true;
+                document.getElementById('roleInputContainer').innerHTML = '';
+                return;
+            }
+
             const currentUser = sessionStorage.getItem('currentUser') || 'SAPBOT';
             document.getElementById('currentUser').textContent = currentUser;
 
             // Load all available roles from mock data
-            loadAvailableRoles();
+            await loadAvailableRoles();
 
             // Add first empty role row
             addRoleRow();
@@ -766,24 +810,44 @@
             document.getElementById('searchBox').addEventListener('input', filterRoles);
         });
 
-        function loadAvailableRoles() {
-            // Get all unique roles from the viewed user (JSMITH) and other users
-            // In a real app, this would fetch from sap-mock-data.json
-            allRoles = [
-                'YOTH_PROC_APPROVE_PO_11',
-                'YOTH_PROC_APPROVE_PO_22',
-                'YOTH_PROC_APPROVE_PO_33',
-                'YOTH_PROC_APPROVE_PO_45',
-                'YOTH_PROC_APPROVE_PO_78',
-                'YOTH_FIN_APPROVE_INV_12',
-                'YOTH_FIN_APPROVE_INV_34',
-                'YOTH_HR_MANAGER',
-                'YOTH_IT_ADMIN',
-                'YOTH_SALES_REP',
-                'Z_PROCUREMENT_APPROVER',
-                'Z_FINANCE_CONTROLLER',
-                'Z_HR_SPECIALIST'
-            ];
+        // User Search Help Modal logic
+        let sapUsers = [];
+        let sapUsersById = {};
+        function openUserSearchModal() {
+            document.getElementById('userSearchModal').style.display = 'flex';
+            document.getElementById('userSearchInput').value = '';
+            filterUserResults();
+            setTimeout(()=>document.getElementById('userSearchInput').focus(), 100);
+        }
+        function closeUserSearchModal() {
+            document.getElementById('userSearchModal').style.display = 'none';
+        }
+        function filterUserResults() {
+            const term = document.getElementById('userSearchInput').value.trim().toUpperCase();
+            const results = sapUsers.filter(u => u.userId.includes(term) || (u.firstName && u.firstName.toUpperCase().includes(term)) || (u.lastName && u.lastName.toUpperCase().includes(term)));
+            const tbody = document.getElementById('userSearchResults');
+            tbody.innerHTML = results.map(u => `<tr style="cursor:pointer;" onclick="selectUserSearch('${u.userId}')"><td>${u.userId}</td><td>${u.firstName||''}</td><td>${u.lastName||''}</td><td>${u.status||''}</td></tr>`).join('');
+        }
+        function selectUserSearch(userId) {
+            document.getElementById('userId').value = userId;
+            closeUserSearchModal();
+            changeUser();
+        }
+
+        async function loadAvailableRoles() {
+            try {
+                const response = await fetch('sap-mock-data.json');
+                const data = await response.json();
+                allRoles = (data.roles || []).map(r => r.roleName);
+                // Also load users for user search
+                sapUsers = (data.users || []).map(u => ({...u, firstName: u.firstName || '', lastName: u.lastName || ''}));
+                sapUsersById = {};
+                sapUsers.forEach(u => { sapUsersById[u.userId] = u; });
+            } catch (e) {
+                showMessage('Failed to load system data', 'error');
+                allRoles = [];
+                sapUsers = [];
+            }
         }
 
         function addRoleRow() {
@@ -872,12 +936,14 @@
         }
 
         function handleCommand(command) {
-            if (command === '/NZV_T16FW' || command === 'ZV_T16FW') {
+            // Standardize t-code format
+            const tcode = command.replace(/^\/(N)?/i, '').toUpperCase();
+            if (tcode === 'ZV_T16FW') {
                 window.location.href = 'zv-t16fw-table.html';
-            } else if (command === '/NEX' || command === '/N') {
+            } else if (tcode === 'NEX' || tcode === 'N') {
                 logout();
             } else {
-                alert('Unknown transaction code: ' + command);
+                showMessage('Unknown transaction code: ' + command, 'error');
                 document.getElementById('commandField').value = '';
             }
         }

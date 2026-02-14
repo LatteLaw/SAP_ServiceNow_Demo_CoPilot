@@ -644,6 +644,9 @@
         </div>
     </div>
 
+    <!-- Message Bar -->
+    <div id="messageBar" style="display:none;padding:8px 15px;margin-bottom:10px;border-left:4px solid #d32f2f;background-color:#ffebee;color:#c62828;font-size:12px;"></div>
+
     <!-- Status Bar -->
     <div class="sap-status-bar">
         <div class="status-left">
@@ -712,8 +715,29 @@
     <script>
         let currentEditRow = null;
 
-        // Load current user from session
+        // SAP-style message bar logic
+        function showMessage(message) {
+            const bar = document.getElementById('messageBar');
+            bar.textContent = message;
+            bar.style.display = 'block';
+            setTimeout(() => {
+                bar.style.display = 'none';
+            }, 3500);
+        }
+
+        // Load current user from session and check scenario
         window.addEventListener('load', function() {
+            // Check for scenario parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const scenario = urlParams.get('scenario');
+            if (scenario && scenario.toUpperCase() === 'NO_AUTH') {
+                showMessage('Authorization failure: You do not have permission to view delegations.');
+                document.getElementById('delegationTableBody').innerHTML = '';
+                document.getElementById('recordCount').textContent = 0;
+                document.getElementById('commandField').disabled = true;
+                return;
+            }
+
             const currentUser = sessionStorage.getItem('currentUser') || 'SAPBOT';
             document.getElementById('currentUser').textContent = currentUser;
             
@@ -744,7 +768,7 @@
             if (command === '/NEX' || command === '/N') {
                 logout();
             } else {
-                alert('Unknown transaction code: ' + command);
+                showMessage('Unknown transaction code: ' + command);
                 document.getElementById('commandField').value = '';
             }
         }
@@ -781,7 +805,7 @@
             const newUser = document.getElementById('editToUser').value;
             
             if (!newUser) {
-                alert('Please select a user');
+                showMessage('Please select a user');
                 return;
             }
 

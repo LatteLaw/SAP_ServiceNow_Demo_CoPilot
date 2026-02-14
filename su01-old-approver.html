@@ -560,7 +560,7 @@
 
     <!-- Command Field -->
     <div class="command-field-container">
-        <input type="text" id="commandField" class="command-field" placeholder="Enter transaction code (e.g., /nSU01, /nZV_T16FW)" autocomplete="off">
+        <input type="text" id="commandField" class="command-field" placeholder="Enter any SAP t-code (e.g., SU01, ZV_T16FW, /NEX)" autocomplete="off">
     </div>
 
     <!-- Main Content -->
@@ -686,7 +686,10 @@
     </div>
 
     <script>
-                // User Search Help Modal logic
+                // User Search Help Modal logic and dynamic user data
+                let sapUsers = [];
+                let sapUsersById = {};
+                let sapRoles = [];
                 function openUserSearchModal() {
                     document.getElementById('userSearchModal').style.display = 'flex';
                     document.getElementById('userSearchInput').value = '';
@@ -697,22 +700,61 @@
                     document.getElementById('userSearchModal').style.display = 'none';
                 }
                 function filterUserResults() {
-                    // Placeholder: populate with static or dynamic user data in next step
-                    const users = [
-                        {userId:'JSMITH',firstName:'John',lastName:'Smith',status:'Active'},
-                        {userId:'MJONES',firstName:'Mary',lastName:'Jones',status:'Active'},
-                        {userId:'ALEE',firstName:'Alice',lastName:'Lee',status:'Active'},
-                        {userId:'RCHEN',firstName:'Robert',lastName:'Chen',status:'Locked'}
-                    ];
                     const term = document.getElementById('userSearchInput').value.trim().toUpperCase();
-                    const results = users.filter(u => u.userId.includes(term) || u.firstName.toUpperCase().includes(term) || u.lastName.toUpperCase().includes(term));
+                    const results = sapUsers.filter(u => u.userId.includes(term) || (u.firstName && u.firstName.toUpperCase().includes(term)) || (u.lastName && u.lastName.toUpperCase().includes(term)));
                     const tbody = document.getElementById('userSearchResults');
-                    tbody.innerHTML = results.map(u => `<tr style="cursor:pointer;" onclick="selectUserSearch('${u.userId}')"><td>${u.userId}</td><td>${u.firstName}</td><td>${u.lastName}</td><td>${u.status}</td></tr>`).join('');
+                    tbody.innerHTML = results.map(u => `<tr style="cursor:pointer;" onclick="selectUserSearch('${u.userId}')"><td>${u.userId}</td><td>${u.firstName||''}</td><td>${u.lastName||''}</td><td>${u.status||''}</td></tr>`).join('');
                 }
                 function selectUserSearch(userId) {
                     document.getElementById('userId').value = userId;
                     closeUserSearchModal();
+                    displayUser();
                 }
+
+                // Fetch user data on load
+                async function fetchSapData() {
+                    // Check for scenario parameter
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const scenario = urlParams.get('scenario');
+                    if (scenario && scenario.toUpperCase() === 'NO_AUTH') {
+                        showMessageBar('Authorization failure: You are not authorized to view this user.', true);
+                        // Optionally disable UI elements
+                        document.getElementById('userId').disabled = true;
+                        document.getElementById('commandField').disabled = true;
+                        document.getElementById('rolesTableBody').innerHTML = '';
+                        return;
+                    }
+                    try {
+                        const resp = await fetch('sap-mock-data.json');
+                        const data = await resp.json();
+                        sapUsers = (data.users || []).map(u => ({...u, firstName: u.firstName || '', lastName: u.lastName || ''}));
+                        sapUsersById = {};
+                        sapUsers.forEach(u => { sapUsersById[u.userId] = u; });
+                        sapRoles = data.roles || [];
+                        // Set initial user details
+                        displayUser();
+                    } catch (e) {
+                        showMessageBar('Failed to load SAP user data.');
+                    }
+                }
+
+                // Display user details and roles
+                function displayUser() {
+                    const userId = document.getElementById('userId').value.trim();
+                    const user = sapUsersById[userId];
+                    if (!user) {
+                        showMessageBar('User not found: ' + userId);
+                        document.getElementById('rolesTableBody').innerHTML = '';
+                        return;
+                    }
+                    // Show roles
+                    const roles = user.roles || [];
+                    document.getElementById('rolesTableBody').innerHTML = roles.map(r => `<tr><td>${r.roleName}</td><td>${r.validFrom||''}</td><td>${r.validTo||''}</td></tr>`).join('');
+                    showMessageBar('User ' + userId + ' displayed');
+                }
+
+                // Fetch SAP data on DOMContentLoaded
+                document.addEventListener('DOMContentLoaded', fetchSapData);
         let pendingNavigation = '';
 
         // Load current user from session
@@ -737,14 +779,15 @@
         });
 
         function handleCommand(command) {
-            // Parse SAP transaction codes
-            if (command === '/NSU01' || command === 'SU01') {
+            // Standardize and handle SAP t-codes
+            const tcode = command.replace(/^\/N/i, '').replace(/^\//, '').toUpperCase();
+            if (tcode === 'SU01') {
                 pendingNavigation = 'su01-new-approver.html';
                 showNavigationPopup();
-            } else if (command === '/NZV_T16FW' || command === 'ZV_T16FW') {
+            } else if (tcode === 'ZV_T16FW') {
                 pendingNavigation = 'zv-t16fw-table.html';
                 showNavigationPopup();
-            } else if (command === '/NEX' || command === '/N') {
+            } else if (tcode === 'NEX' || tcode === 'N') {
                 logout();
             } else {
                 showMessageBar('Unknown transaction code: ' + command);

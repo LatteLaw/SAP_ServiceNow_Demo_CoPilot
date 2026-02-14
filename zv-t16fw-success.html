@@ -488,6 +488,9 @@
 </div>
 </div>
 
+<!-- Message Bar -->
+<div id="messageBar" style="display:none;padding:8px 15px;margin-bottom:10px;border-left:4px solid #d32f2f;background-color:#ffebee;color:#c62828;font-size:12px;"></div>
+
 <!-- SAP Status Bar -->
 <div class="sap-status-bar">
     <div class="status-left">System: SAP ECC 6.0 | Transaction: ZV_T16FW | Status: COMPLETED</div>
@@ -495,8 +498,28 @@
 </div>
 
     <script>
+        // SAP-style message bar logic
+        function showMessage(message) {
+            const bar = document.getElementById('messageBar');
+            if (!bar) return; // if message bar doesn't exist, skip
+            bar.textContent = message;
+            bar.style.display = 'block';
+            setTimeout(() => {
+                bar.style.display = 'none';
+            }, 3500);
+        }
+
         // Load current user and update info from session
         window.addEventListener('load', function() {
+            // Check for scenario parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const scenario = urlParams.get('scenario');
+            if (scenario && scenario.toUpperCase() === 'NO_AUTH') {
+                showMessage('Authorization failure: You do not have permission to view this transaction.');
+                document.querySelector('.action-buttons').innerHTML = '<button class="sap-button" onclick="returnToMenu()">Return to Main Menu</button>';
+                return;
+            }
+
             const currentUser = sessionStorage.getItem('currentUser') || 'SAPBOT';
             document.getElementById('currentUserLog').textContent = currentUser;
             document.getElementById('statusUser').textContent = currentUser;
@@ -533,10 +556,11 @@
         });
 
         function handleCommand(command) {
-            if (command === '/NEX' || command === '/N') {
+            const tcode = command.replace(/^\/(N)?/i, '').toUpperCase();
+            if (tcode === 'NEX' || tcode === 'N') {
                 logout();
             } else {
-                alert('Unknown transaction code: ' + command);
+                showMessage('Unknown transaction code: ' + command);
                 document.getElementById('commandField').value = '';
             }
         }

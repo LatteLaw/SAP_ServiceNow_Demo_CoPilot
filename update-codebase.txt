@@ -1,0 +1,469 @@
+Perfect. Let me create a comprehensive specification document with all the exact code changes needed for your SAP ECC6 CUA demo.
+
+***
+
+# SAP ECC6 CUA Demo - Code Update Specification
+
+**Repository**: LatteLaw/SAP_ServiceNow_Demo_CoPilot  
+**Date**: 14 February 2026  
+**Purpose**: Make the demo robust for onsite customer CUA practice with less-accurate agent
+
+***
+
+## Overview of Changes
+
+This specification covers 7 critical updates across 5 HTML files to transform the static demo into a flexible, agent-friendly CUA practice harness. All changes maintain SAP ECC6 GUI look-and-feel while adding dynamic user selection, proper error handling, and realistic scenarios.
+
+***
+
+## File 1: `sap-mock-data.json` (UPDATED)
+
+### Changes Required
+1. Add 2 more users (ALEE, RCHEN) with varied role/delegation scenarios
+2. Add validity dates to some roles
+3. Add duplicate role scenario data
+4. Add auth failure flag for testing
+
+### Complete Updated File
+
+```json
+{
+  "users": [
+    {
+      "userId": "JSMITH",
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@company.com",
+      "status": "Active",
+      "validFrom": "01.01.2024",
+      "validTo": "31.12.2099",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_33",
+          "roleText": "Purchase Order Approval - Code 33",
+          "validFrom": "01.01.2024",
+          "validTo": "31.12.2099",
+          "companyCode": "1000"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_45",
+          "roleText": "Purchase Order Approval - Code 45",
+          "validFrom": "01.01.2024",
+          "validTo": "31.12.2099",
+          "companyCode": "1000"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_78",
+          "roleText": "Purchase Order Approval - Code 78",
+          "validFrom": "01.01.2024",
+          "validTo": "31.12.2099",
+          "companyCode": "1000"
+        }
+      ]
+    },
+    {
+      "userId": "MJONES",
+      "firstName": "Mary",
+      "lastName": "Jones",
+      "email": "mary.jones@company.com",
+      "status": "Active",
+      "validFrom": "15.03.2025",
+      "validTo": "31.12.2099",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_CREATE_PR",
+          "roleText": "Purchase Requisition Creator",
+          "validFrom": "15.03.2025",
+          "validTo": "31.12.2099",
+          "companyCode": "1000"
+        }
+      ]
+    },
+    {
+      "userId": "MWHITE",
+      "firstName": "Michael",
+      "lastName": "White",
+      "email": "michael.white@company.com",
+      "status": "Active",
+      "validFrom": "01.06.2025",
+      "validTo": "31.12.2099",
+      "roles": [
+        {
+          "roleName": "YOTH_FIN_APPROVER_L1",
+          "roleText": "Financial Approver Level 1",
+          "validFrom": "01.06.2025",
+          "validTo": "30.06.2026",
+          "companyCode": "1000"
+        }
+      ]
+    },
+    {
+      "userId": "ALEE",
+      "firstName": "Alice",
+      "lastName": "Lee",
+      "email": "alice.lee@company.com",
+      "status": "Active",
+      "validFrom": "01.01.2025",
+      "validTo": "31.12.2099",
+      "roles": [
+        {
+          "roleName": "YOTH_PROC_CREATE_PR",
+          "roleText": "Purchase Requisition Creator",
+          "validFrom": "01.01.2025",
+          "validTo": "31.12.2099",
+          "companyCode": "1000"
+        },
+        {
+          "roleName": "YOTH_PROC_APPROVE_PO_33",
+          "roleText": "Purchase Order Approval - Code 33",
+          "validFrom": "01.01.2025",
+          "validTo": "31.12.2099",
+          "companyCode": "1000"
+        }
+      ]
+    },
+    {
+      "userId": "RCHEN",
+      "firstName": "Robert",
+      "lastName": "Chen",
+      "email": "robert.chen@company.com",
+      "status": "Locked",
+      "validFrom": "01.02.2025",
+      "validTo": "31.12.2099",
+      "roles": []
+    }
+  ],
+  "roles": [
+    {
+      "roleName": "YOTH_PROC_APPROVE_PO_33",
+      "roleText": "Purchase Order Approval - Code 33",
+      "type": "Single",
+      "application": "PROCUREMENT"
+    },
+    {
+      "roleName": "YOTH_PROC_APPROVE_PO_45",
+      "roleText": "Purchase Order Approval - Code 45",
+      "type": "Single",
+      "application": "PROCUREMENT"
+    },
+    {
+      "roleName": "YOTH_PROC_APPROVE_PO_78",
+      "roleText": "Purchase Order Approval - Code 78",
+      "type": "Single",
+      "application": "PROCUREMENT"
+    },
+    {
+      "roleName": "YOTH_PROC_CREATE_PR",
+      "roleText": "Purchase Requisition Creator",
+      "type": "Single",
+      "application": "PROCUREMENT"
+    },
+    {
+      "roleName": "YOTH_FIN_APPROVER_L1",
+      "roleText": "Financial Approver Level 1",
+      "type": "Single",
+      "application": "FINANCE"
+    },
+    {
+      "roleName": "YOTH_FIN_APPROVER_L2",
+      "roleText": "Financial Approver Level 2",
+      "type": "Single",
+      "application": "FINANCE"
+    },
+    {
+      "roleName": "YOTH_INV_MANAGER",
+      "roleText": "Inventory Manager",
+      "type": "Composite",
+      "application": "MATERIALS"
+    }
+  ],
+  "delegations": [
+    {
+      "releaseCode": "33",
+      "releaseCodeText": "PO Approval Code 33",
+      "plant": "1000",
+      "costCenter": "CC-1000",
+      "fromUser": "JSMITH",
+      "toUser": "MJONES",
+      "validFrom": "01.01.2024",
+      "validTo": "31.12.2099"
+    },
+    {
+      "releaseCode": "45",
+      "releaseCodeText": "PO Approval Code 45",
+      "plant": "1000",
+      "costCenter": "CC-1000",
+      "fromUser": "JSMITH",
+      "toUser": "MJONES",
+      "validFrom": "01.01.2024",
+      "validTo": "31.12.2099"
+    },
+    {
+      "releaseCode": "78",
+      "releaseCodeText": "PO Approval Code 78",
+      "plant": "1000",
+      "costCenter": "CC-1000",
+      "fromUser": "JSMITH",
+      "toUser": "MJONES",
+      "validFrom": "01.01.2024",
+      "validTo": "31.12.2099"
+    }
+  ]
+}
+```
+
+***
+
+## File 2: `su01-old-approver.html` (MAJOR UPDATES)
+
+### Key Changes
+1. **Remove alert()** - Replace with SAP-style message bar
+2. **Make userId field editable with F4 search help**
+3. **Load user data from JSON dynamically**
+4. **Standardize command field to accept all t-codes**
+5. **Add scenario parameter support (?scenario=NO_AUTH)**
+
+### Code Changes
+
+#### 1. Add User Search Modal HTML (insert after `</form>`, before `</div>` closing the main content)
+
+```html
+<!-- User Search Help Modal -->
+<div id="userSearchModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="modal-title">Search Help: Users</span>
+            <span class="close-modal" onclick="closeUserSearch()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="search-input-group">
+                <label for="userSearchInput">User ID:</label>
+                <input type="text" id="userSearchInput" placeholder="Enter search term..." oninput="filterUserResults()">
+            </div>
+            <div class="search-results">
+                <table id="userSearchTable">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userSearchResults">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-button" onclick="closeUserSearch()">Cancel</button>
+        </div>
+    </div>
+</div>
+```
+
+#### 2. Update CSS (add to `<style>` section)
+
+```css
+/* Message Bar Styles */
+#messageBar {
+    display: none;
+    padding: 8px 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid #d32f2f;
+    background-color: #ffebee;
+    color: #c62828;
+    font-size: 12px;
+}
+
+#messageBar.show {
+    display: block;
+}
+
+/* User Search Modal Styles */
+.f4-button {
+    background-color: #f0f0f0;
+    border: 1px solid #999;
+    padding: 4px 8px;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.f4-button:hover {
+    background-color: #e0e0e0;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    width: 600px;
+    border: 2px solid #003366;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+    background: linear-gradient(to bottom, #003D7A 0%, #002855 100%);
+    color: white;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.close-modal {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #ffeb3b;
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.search-input-group {
+    margin-bottom: 15px;
+}
+
+.search-input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.search-input-group input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #999;
+    font-size: 12px;
+}
+
+.search-results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.search-results th {
+    background-color: #003366;
+    color: white;
+    padding: 8px;
+    text-align: left;
+    font-size: 11px;
+}
+
+.search-results td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.search-results tr:hover {
+    background-color: #e3f2fd;
+}
+
+.modal-footer {
+    padding: 12px 15px;
+    text-align: right;
+    border-top: 1px solid #ddd;
+}
+
+.modal-button {
+    padding: 6px 15px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.modal-button:hover {
+    background-color: #004080;
+}
+```
+
+#### 3. Update User ID Input Field HTML
+
+Replace the existing userId field div with:
+
+```html
+<div class="form-group">
+    <label for="userId">User</label>
+    <div style="display: flex; align-items: center;">
+        <input type="text" id="userId" value="" style="flex: 1;">
+        <button type="button" class="f4-button" onclick="openUserSearch()">F4</button>
+    </div>
+</div>
+```
+
+#### 4. Add Message Bar HTML (insert right after opening `<div class="sap-window">`)
+
+```html
+<div id="messageBar"></div>
+```
+
+#### 5. Replace Entire `<script>` Section
+
+```javascript
+<script>
+    let mockData = null;
+    let currentScenario = null;
+
+    // Load mock data and check for scenario parameter
+    window.addEventListener('load', async function() {
+        // Check for scenario parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        currentScenario = urlParams.get('scenario');
+
+        try {
+            const response = await fetch('./sap-mock-data.json');
+            mockData = await response.json();
+            
+            // Load user from sessionStorage if available
+            const storedUser = sessionStorage.getItem('displayUser') || 'JSMITH';
+            document.getElementById('userId').value = storedUser;
+            loadUserData(storedUser);
+        } catch (error) {
+            showMessage('Error loading system data: ' + error.message);
+        }
+    });
+
+    function showMessage(message, isError = true) {
+        const messageBar = document.getElementById('messageBar');
+        messageBar.textContent = message;
+        messageBar.style.display = 'block';
+        messageBar.style.borderLeftColor = isError ? '#d32f2f' : '#388e3c';
+        messageBar.style.backgroundColor = isError ? '#ffebee' : '#e8f5e9';
+        messageBar.style.color = isError ? '#c62828' : '#2e7d32';
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            messageBar.style.display = 'none';
+        }, 5000);
+    }
+
+    function loadUserData(userId
