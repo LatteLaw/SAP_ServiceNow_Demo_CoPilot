@@ -1,0 +1,91 @@
+{
+  "systems": [
+    {
+      "name": "01 Eisai Production",
+      "sid": "EIP"
+    },
+    {
+      "name": "02 Eisai Validation",
+      "sid": "EIQ"
+    },
+    {
+      "name": "03 Eisai Development",
+      "sid": "EID"
+    }
+  ],
+  "defaults": {
+    "client": "300",
+    "user": "eel20335",
+    "password": "demo",
+    "language": "EN",
+    "showMultipleLogonPopup": true
+  },
+  "users": [
+    {
+      "userId": "EEL20141",
+      "firstName": "John",
+      "lastName": "Lang",
+      "department": "EMEA ICT Business Solutions",
+      "company": "EISAI",
+      "roles": [
+        {
+          "status": "\u25a0",
+          "role": "YOTH_FI_FISAPSCAN_MGT",
+          "type": " ",
+          "start": "25.08.2017",
+          "end": "31.12.9999",
+          "desc": "FIS Invoice Scanning AP and Management"
+        },
+        {
+          "status": "\u25a0",
+          "role": "YOTH_FI_GEN_CLUST1",
+          "type": " ",
+          "start": "04.09.2018",
+          "end": "31.12.9999",
+          "desc": "General display Cluster 1 (1001 1002 1003)"
+        },
+        {
+          "status": "\u25a0",
+          "role": "YOTH_PROC_APPROVE_PO_33",
+          "type": " ",
+          "start": "25.08.2017",
+          "end": "31.12.9999",
+          "desc": "PO approval Release Code 33"
+        },
+        {
+          "status": "\u25a0",
+          "role": "YOTH_PROC_GENERAL_ALL",
+          "type": " ",
+          "start": "25.08.2017",
+          "end": "31.12.9999",
+          "desc": "P2P Display Role for All User Groups"
+        }
+      ]
+    },
+    {
+      "userId": "EEL20335",
+      "firstName": "Elaine",
+      "lastName": "Jones",
+      "department": "EMEA ICT Business Solutions",
+      "company": "EISAI",
+      "roles": [
+        {
+          "status": "\u25a0",
+          "role": "YOTH_PROC_GENERAL_ALL",
+          "type": " ",
+          "start": "25.08.2017",
+          "end": "31.12.9999",
+          "desc": "P2P Display Role for All User Groups"
+        }
+      ]
+    },
+    {
+      "userId": "SUPPORT",
+      "firstName": "Support",
+      "lastName": "User",
+      "department": "IT Support",
+      "company": "EISAI",
+      "roles": []
+    }
+  ]
+}

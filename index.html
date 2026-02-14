@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SAP ECC6 Mock (SU01 Role Copy)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="stage">
+    <div class="window" id="window">
+      <div class="titlebar" id="nativeTitle">
+        <button class="hamburger" aria-label="Menu">≡</button>
+        <div id="nativeTitleText">SAP Logon 770</div>
+        <div class="winbtns">
+          <button class="winbtn" title="Minimise">—</button>
+          <button class="winbtn" title="Maximise">□</button>
+          <button class="winbtn" title="Close">×</button>
+        </div>
+      </div>
+
+      <div class="menubar" id="menu">
+        <span>User</span><span>System</span><span>Help</span>
+      </div>
+
+      <div class="sap-shellbar" id="shell" style="display:none;">
+        <div class="sap-logo">SAP</div>
+        <div class="shell-title" id="shellTitle">SAP</div>
+        <div class="shell-right">
+          <span id="tcodeBadge" class="badge" style="display:none;">SU01</span>
+          <span id="sidBadge" class="badge">S000</span>
+        </div>
+      </div>
+
+      <div class="toolbar" id="toolbar">
+        <button class="toolbtn primary" id="btnEnter"><span class="toolicon"></span>Enter</button>
+        <button class="toolbtn" id="btnBack"><span class="toolicon"></span>Back</button>
+        <button class="toolbtn" id="btnExit"><span class="toolicon"></span>Exit</button>
+        <div style="flex:1"></div>
+        <span class="muted">Mock only (no real SAP)</span>
+      </div>
+
+      <div class="content" id="content">
+        <!-- screens injected -->
+      </div>
+
+      <div class="statusbar">
+        <div class="msg" id="statusMsg">Ready.</div>
+        <div class="right">
+          <span id="statusRight1"></span>
+          <span id="statusRight2"></span>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+        <div class="modal" id="modal">
+          <div class="m-title" id="modalTitle">
+            <span>Modal</span>
+            <button class="winbtn" id="modalClose" title="Close">×</button>
+          </div>
+          <div id="modalTabs" class="m-tabs" style="display:none;"></div>
+          <div class="m-body" id="modalBody"></div>
+          <div class="m-actions" id="modalActions"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
