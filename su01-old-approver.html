@@ -20,6 +20,20 @@
         }
 
         /* SAP Title Bar */
+
+        /* Message Bar Styles */
+        #messageBar {
+            display: none;
+            padding: 8px 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #d32f2f;
+            background-color: #ffebee;
+            color: #c62828;
+            font-size: 12px;
+        }
+        #messageBar.show {
+            display: block;
+        }
         .sap-title-bar {
             background: linear-gradient(to bottom, #003D7A 0%, #002855 100%);
             color: white;
@@ -496,6 +510,7 @@
 </head>
 <body>
     <!-- SAP Title Bar -->
+    <div id="messageBar"></div>
     <div class="sap-title-bar">
         <div class="title-left">
             <span class="sap-icon">SAP</span>
@@ -673,7 +688,7 @@
             } else if (command === '/NEX' || command === '/N') {
                 logout();
             } else {
-                alert('Unknown transaction code: ' + command);
+                showMessageBar('Unknown transaction code: ' + command);
                 document.getElementById('commandField').value = '';
             }
         }
@@ -686,6 +701,16 @@
             document.getElementById('navigationPopup').classList.remove('active');
             document.getElementById('commandField').value = '';
             pendingNavigation = '';
+        }
+
+        // SAP-style message bar logic
+        function showMessageBar(message) {
+            const bar = document.getElementById('messageBar');
+            bar.textContent = message;
+            bar.classList.add('show');
+            setTimeout(() => {
+                bar.classList.remove('show');
+            }, 3500);
         }
 
         function confirmNavigation() {
